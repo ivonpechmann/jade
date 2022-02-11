@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
+import '../shared/top_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'images/white_logo_transparent_noName.png',
-          height: 70,
-        ),
-        centerTitle: true,
-      ),
+    return const Scaffold(
+      appBar: TopBar()
     );
   }
 }
