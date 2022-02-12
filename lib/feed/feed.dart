@@ -15,6 +15,7 @@ class FeedScreen extends StatelessWidget {
         backgroundColor: Colors.blueGrey,
         onPressed: () {
           AuthService().auth.signOut();
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         },
         text: "Log Out",
       )

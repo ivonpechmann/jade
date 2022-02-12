@@ -16,6 +16,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   bool? _success;
   String _userEmail = '';
@@ -31,7 +32,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
         _success = true;
         _userEmail = user.email ?? '';
       });
-      Navigator.pushNamed(context, '/feed');
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
     } else {
       _success = false;
     }
@@ -54,7 +55,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   decoration: const InputDecoration(labelText: 'Email'),
                   validator: (String? value) {
                     if (value!.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Please enter your email';
                     }
                     return null;
                   },
@@ -64,7 +65,18 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   decoration: const InputDecoration(labelText: 'Password'),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                ),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  decoration: const InputDecoration(labelText: 'Confirm Password'),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm your password';
                     }
                     return null;
                   },
@@ -90,7 +102,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                     _success == null
                         ? ''
                         : (_success!
-                            ? 'Successfully registered $_userEmail'
+                            ? ''
                             : 'Registration failed'),
                   ),
                 )

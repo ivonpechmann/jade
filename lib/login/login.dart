@@ -27,7 +27,9 @@ class LoginScreen extends StatelessWidget {
             SignInButtonBuilder(
                 backgroundColor: grayColor,
                 icon: Icons.email,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/email_login');
+                },
                 text: "Use Email"),
             SignInButtonBuilder(
               backgroundColor: grayColor,
