@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 var themeData = ThemeData(
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
   fontFamily: GoogleFonts.nunitoSans().fontFamily,
   textTheme: const TextTheme(
     bodyText1: TextStyle(
@@ -26,4 +27,5 @@ var themeData = ThemeData(
 );
 
 const grayColor = Color.fromARGB(156, 54, 54, 54);
+const purpleColor = Color.fromRGBO(52, 0, 135, 100);
 

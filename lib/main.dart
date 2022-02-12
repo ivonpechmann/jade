@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:jade/routes.dart';
 import 'package:jade/theme.dart';
 import 'firebase/firebase_options.dart';
 import 'home/home.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Jade',
       debugShowCheckedModeBanner: false,
+      routes: appRoutes,
       theme: themeData,
       home: const Home()
     );

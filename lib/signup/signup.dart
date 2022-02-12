@@ -27,7 +27,9 @@ class SignUpScreen extends StatelessWidget {
             SignInButtonBuilder(
                 backgroundColor: grayColor,
                 icon: Icons.email,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/email_signup');
+                },
                 text: "Use Email"),
             SignInButtonBuilder(
               backgroundColor: grayColor,
@@ -59,12 +61,15 @@ class SignUpScreen extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(vertical: 35),
           ),
-          Container(
-            child: Text(
-              "Log in.",
-              style: Theme.of(context).textTheme.bodyText2,
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, '/login'),
+            child: Container(
+              child: Text(
+                "Log in.",
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 35),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 35),
           )
         ],
       ),
