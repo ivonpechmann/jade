@@ -32,7 +32,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
         setState(() {
           _success = true;
         });
-        Navigator.pushNamed(context, '/set_username');
+        Navigator.pushNamed(context, '/verify_email');
       } else {
         setState(() {
           _success = false;
