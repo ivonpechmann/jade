@@ -1,18 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jade/services/auth.dart';
+import 'package:jade/shared/top_bar.dart';
+import 'package:jade/theme.dart';
 
 class EmailLoginScreen extends StatefulWidget {
-  EmailLoginScreen({Key? key}) : super(key: key);
+  const EmailLoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<EmailLoginScreen> createState() => _EmailLoginScreenState();
+  State<StatefulWidget> createState() => _EmailLoginScreenState();
 }
 
 class _EmailLoginScreenState extends State<EmailLoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _errorMessage = '';
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(30),
-      child: const Text("Login with email"),
+    return Scaffold(
+      appBar: TopBar(),
+      body: Form(
+        key: _formKey,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  validator: (String? value) {
+                    if (value!.isEmpty) return 'Please enter some text';
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  validator: (String? value) {
+                    if (value!.isEmpty) return 'Please enter some text';
+                    return null;
+                  },
+                  obscureText: true,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 16),
+                  alignment: Alignment.center,
+                  child: SignInButtonBuilder(
+                    icon: Icons.email,
+                    backgroundColor: purpleColor,
+                    text: 'Sign In',
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _signInWithEmailAndPassword();
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    _errorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  // Example code of how to sign in with email and password.
+  Future<void> _signInWithEmailAndPassword() async {
+    try {
+      User? user = (await AuthService().auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      )).user;
+      if (user != null) {
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      } else {
+        setState(() {
+          _errorMessage = "Sign in failed for an unknown reason. Please try again.";
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = e.message;
+      });
+    } catch (e) {
+      _errorMessage = e.toString();
+    }
   }
 }

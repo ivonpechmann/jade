@@ -13,8 +13,8 @@ class FeedScreen extends StatelessWidget {
       alignment: Alignment.center,
       child: SignInButtonBuilder(
         backgroundColor: Colors.blueGrey,
-        onPressed: () {
-          AuthService().auth.signOut();
+        onPressed: () async {
+          await AuthService().auth.signOut();
           Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         },
         text: "Log Out",

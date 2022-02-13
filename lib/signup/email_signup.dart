@@ -16,25 +16,40 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
 
   bool? _success;
-  String _userEmail = '';
+  String? _errorMessage;
 
   Future<void> _register() async {
-    final User? user = (await AuthService().auth.createUserWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    ))
-        .user;
-    if (user != null) {
+    try {
+      final User? user =
+          (await AuthService().auth.createUserWithEmailAndPassword(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  ))
+              .user;
+      if (user != null) {
+        setState(() {
+          _success = true;
+        });
+        Navigator.pushNamed(context, '/set_username');
+      } else {
+        setState(() {
+          _success = false;
+          _errorMessage =
+              "Registration failed for unknown reason. Please try again.";
+        });
+      }
+    } on FirebaseAuthException catch (e) {
       setState(() {
-        _success = true;
-        _userEmail = user.email ?? '';
+        _success = false;
+        _errorMessage = e.message;
       });
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-    } else {
-      _success = false;
+    } catch (e) {
+      setState(() {
+        _success = false;
+        _errorMessage = e.toString();
+      });
     }
   }
 
@@ -71,17 +86,6 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   },
                   obscureText: true,
                 ),
-                TextFormField(
-                  controller: _confirmPasswordController,
-                  decoration: const InputDecoration(labelText: 'Confirm Password'),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please confirm your password';
-                    }
-                    return null;
-                  },
-                  obscureText: true,
-                ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   alignment: Alignment.center,
@@ -89,21 +93,18 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                     icon: Icons.person_add,
                     backgroundColor: purpleColor,
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await _register();
-                      }
+                      await _register();
                     },
-                    text: 'Register',
+                    text: 'Sign Up',
                   ),
                 ),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
                     _success == null
-                        ? ''
-                        : (_success!
-                            ? ''
-                            : 'Registration failed'),
+                    ? ''
+                    : (_success! ? '' : _errorMessage!),
+                  style: const TextStyle(color: Colors.red),
                   ),
                 )
               ],
