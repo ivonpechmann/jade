@@ -16,7 +16,7 @@ var themeData = ThemeData(
     ),
     headline4: TextStyle(
       color: Colors.white,
-      fontSize: 35,
+      fontSize: 45,
       fontWeight: FontWeight.w400
     )
   ),

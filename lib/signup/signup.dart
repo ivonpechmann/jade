@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jade/services/auth.dart';
 import 'package:jade/shared/top_bar.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:jade/theme.dart';
@@ -17,9 +18,13 @@ class SignUpScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            const SizedBox(
+              height: 90,
+            ),
             Text(
-              "Sign up for Jade",
+              "Express yourself.",
               style: Theme.of(context).textTheme.headline4,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 60,
@@ -31,23 +36,18 @@ class SignUpScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/email_signup');
                 },
                 text: "Use Email"),
-            SignInButtonBuilder(
-              backgroundColor: grayColor,
-              icon: Icons.phone,
-              onPressed: () {},
-              text: "Use Phone",
-            ),
             SignInButton(
               Buttons.GoogleDark,
               text: "Continue with Google",
-              onPressed: () {},
+              onPressed: () {
+                AuthService().signInWithGoogle();
+                if (AuthService().user != null) {
+                  Navigator.pushNamedAndRemoveUntil(context, '/feed', (route) => false);
+                }
+              },
             ),
             SignInButton(Buttons.Apple,
                 text: "Continue with Apple", onPressed: () {}),
-            SignInButton(Buttons.Facebook,
-                text: "Continue with Facebook", onPressed: () {}),
-            SignInButton(Buttons.Twitter,
-                text: "Continue with Twitter", onPressed: () {}),
           ],
         ),
       ),
@@ -55,14 +55,12 @@ class SignUpScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            child: Text(
-              "Already have an account? ",
-              style: Theme.of(context).textTheme.bodyText1
-            ),
+            child: Text("Already have an account? ",
+                style: Theme.of(context).textTheme.bodyText1),
             padding: const EdgeInsets.symmetric(vertical: 35),
           ),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, '/login'),
+            onTap: () => Navigator.pushNamed(context, '/email_login'),
             child: Container(
               child: Text(
                 "Log in.",

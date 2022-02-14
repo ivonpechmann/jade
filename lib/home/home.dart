@@ -12,13 +12,13 @@ class Home extends StatelessWidget {
       stream: AuthService().userStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container();
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return const Center(
             child: Text("ERR: Failed to authenticate user"),
           );
-        } else if (snapshot.hasData) {
-          return const FeedScreen();
+        } else if (snapshot.hasData && AuthService().user!.emailVerified) {
+            return const FeedScreen();
         } else {
           return const SignUpScreen();
         }

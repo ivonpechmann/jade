@@ -93,7 +93,11 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
         password: _passwordController.text,
       )).user;
       if (user != null) {
-        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        if (user.emailVerified) {
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(context, '/verify_email', (route) => false);
+        }
       } else {
         setState(() {
           _errorMessage = "Sign in failed for an unknown reason. Please try again.";
