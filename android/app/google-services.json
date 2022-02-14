@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "28189343074",
+    "project_id": "jade-dev-1e742",
+    "storage_bucket": "jade-dev-1e742.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28189343074:android:3830ac9f5ac7445cb9c03b",
+        "android_client_info": {
+          "package_name": "com.jadeapp.jade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28189343074-dtl12fvhb49gajsik22h6nruqdgtc18v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jadeapp.jade",
+            "certificate_hash": "1b8755e6ced93914b99d00caa80ca91fb67f625a"
+          }
+        },
+        {
+          "client_id": "28189343074-mfqmlk11osv10tk6pnao90j5r4atk3pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa87O4oSFGTj2DPBnW0nn-TLa4lCYrQG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28189343074-mfqmlk11osv10tk6pnao90j5r4atk3pb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "28189343074-k0rttnmllnnhj7hudnvp4roijohbps8g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jadeapp.jade"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
