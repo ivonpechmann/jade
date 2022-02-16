@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:jade/services/auth.dart';
 
 class FeedScreen extends StatelessWidget {
@@ -11,15 +10,12 @@ class FeedScreen extends StatelessWidget {
       padding: const EdgeInsets.all(50),
       constraints: const BoxConstraints(maxHeight: 30),
       alignment: Alignment.center,
-      child: SignInButtonBuilder(
-        backgroundColor: Colors.blueGrey,
-        onPressed: () async {
-          await AuthService().signOut();
-          if (AuthService().user == null) {
-            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-          }
+      child: TextButton(
+        onPressed: () {
+          AuthService().signOut();
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         },
-        text: "Log Out",
+        child: const Text('Log out'),
       )
     );
   }

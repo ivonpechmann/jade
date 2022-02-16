@@ -47,10 +47,10 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               style: Theme.of(context).textTheme.headline4,
             ),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             Text(
-              'An email has been sent to ${user!.email}. Please verify.',
+              'An email has been sent to ${user!.email}.',
               style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
             )

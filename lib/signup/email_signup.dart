@@ -117,7 +117,6 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
 
   @override
   void dispose() {
-    // Clean up the controller when the Widget is disposed
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();

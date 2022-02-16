@@ -22,7 +22,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopBar(),
+      appBar: const TopBar(),
       body: Form(
         key: _formKey,
         child: Card(
@@ -33,7 +33,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               children: <Widget>[
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: const InputDecoration(labelText: 'Username or Email'),
                   validator: (String? value) {
                     if (value!.isEmpty) return 'Please enter some text';
                     return null;
@@ -47,6 +47,15 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                     return null;
                   },
                   obscureText: true,
+                ),
+                TextButton(
+                  onPressed: _resetPassword,
+                  child: const Text(
+                    'Forgot password?',
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 16),
@@ -85,7 +94,6 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     super.dispose();
   }
 
-  // Example code of how to sign in with email and password.
   Future<void> _signInWithEmailAndPassword() async {
     try {
       User? user = (await AuthService().auth.signInWithEmailAndPassword(
@@ -111,4 +119,50 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
       _errorMessage = e.toString();
     }
   }
+
+  Future _resetPassword() async {
+    String? email;
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _errorMessage = 'Check email to reset password.';
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Send'),
+            ),
+          ],
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Enter your email'),
+              const SizedBox(height: 20),
+              TextFormField(
+                onChanged: (value) {
+                  email = value;
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (email != null) {
+      try {
+        await AuthService().auth.sendPasswordResetEmail(email: email!);
+      } catch (e) {
+        setState(() {
+          _errorMessage = 'Please enter a valid email.';
+        });
+      }
+    } 
+  }
+
 }

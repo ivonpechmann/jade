@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jade/services/auth.dart';
 import 'package:jade/shared/top_bar.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:jade/theme.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -13,13 +11,13 @@ class SignUpScreen extends StatelessWidget {
       appBar: const TopBar(),
       body: Container(
         padding: const EdgeInsets.all(30),
-        width: double.infinity,
+        alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(
-              height: 90,
+              height: 70,
             ),
             Text(
               "Express yourself.",
@@ -27,49 +25,42 @@ class SignUpScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 60,
+              height: 80,
             ),
-            SignInButtonBuilder(
-                backgroundColor: grayColor,
-                icon: Icons.email,
+            Column(children: [
+              TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/email_signup');
                 },
-                text: "Use Email"),
-            SignInButton(
-              Buttons.GoogleDark,
-              text: "Continue with Google",
-              onPressed: () {
-                AuthService().signInWithGoogle();
-                if (AuthService().user != null) {
-                  Navigator.pushNamedAndRemoveUntil(context, '/feed', (route) => false);
-                }
-              },
-            ),
-            SignInButton(Buttons.Apple,
-                text: "Continue with Apple", onPressed: () {}),
+                child: Text(
+                  'Create account',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 70, vertical: 15)),
+                  backgroundColor: MaterialStateProperty.all(purpleColor),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)
+                    )
+                  )
+                )
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/email_login');
+                },
+                child: Text(
+                  'Log in',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ),
+            ])
           ],
         ),
-      ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            child: Text("Already have an account? ",
-                style: Theme.of(context).textTheme.bodyText1),
-            padding: const EdgeInsets.symmetric(vertical: 35),
-          ),
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, '/email_login'),
-            child: Container(
-              child: Text(
-                "Log in.",
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 35),
-            ),
-          )
-        ],
       ),
     );
   }

@@ -10,13 +10,12 @@ var themeData = ThemeData(
       fontSize: 14,
     ),
     bodyText2: TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Colors.lightBlue,
-      fontSize: 14,
+      color: Colors.white,
+      fontSize: 16,
     ),
     headline4: TextStyle(
       color: Colors.white,
-      fontSize: 45,
+      fontSize: 38,
       fontWeight: FontWeight.w400
     )
   ),
