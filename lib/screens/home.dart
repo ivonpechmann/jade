@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jade/feed/feed.dart';
+import 'package:jade/screens/feed.dart';
 import 'package:jade/services/auth.dart';
-import 'package:jade/signup/signup.dart';
+import 'package:jade/screens/signup.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
