@@ -20,39 +20,6 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
   bool? _success;
   String? _errorMessage;
 
-  Future<void> _register() async {
-    try {
-      final User? user =
-          (await AuthService().auth.createUserWithEmailAndPassword(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  ))
-              .user;
-      if (user != null) {
-        setState(() {
-          _success = true;
-        });
-        Navigator.pushNamedAndRemoveUntil(context, '/verify_email', (route) => false);
-      } else {
-        setState(() {
-          _success = false;
-          _errorMessage =
-              "Registration failed for unknown reason. Please try again.";
-        });
-      }
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        _success = false;
-        _errorMessage = e.message;
-      });
-    } catch (e) {
-      setState(() {
-        _success = false;
-        _errorMessage = e.toString();
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +80,39 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _register() async {
+    try {
+      final User? user =
+          (await AuthService().auth.createUserWithEmailAndPassword(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  ))
+              .user;
+      if (user != null) {
+        setState(() {
+          _success = true;
+        });
+        Navigator.pushNamedAndRemoveUntil(context, '/verify_email', (route) => false);
+      } else {
+        setState(() {
+          _success = false;
+          _errorMessage =
+              "Registration failed for unknown reason. Please try again.";
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _success = false;
+        _errorMessage = e.message;
+      });
+    } catch (e) {
+      setState(() {
+        _success = false;
+        _errorMessage = e.toString();
+      });
+    }
   }
 
   @override

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jade/shared/top_bar.dart';
 import 'package:jade/theme.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class LandingScreen extends StatelessWidget {
+  const LandingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

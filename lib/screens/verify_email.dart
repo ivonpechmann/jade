@@ -65,7 +65,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     await user!.reload();
     if (user!.emailVerified) {
       timer!.cancel();
-      Navigator.pushNamedAndRemoveUntil(context, '/set_username', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, '/profile_setup', (route) => false);
     }
   }
 }

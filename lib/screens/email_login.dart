@@ -87,13 +87,6 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
   Future<void> _signInWithEmailAndPassword() async {
     try {
       User? user = (await AuthService().auth.signInWithEmailAndPassword(
@@ -163,6 +156,13 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
         });
       }
     } 
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
 }
