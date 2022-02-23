@@ -14,7 +14,6 @@ class ProfileSetupScreen extends StatefulWidget {
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _displayNameController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
   String _errorMessage = '';
 
   @override
@@ -33,9 +32,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 child: Container(),
                 flex: 2,
               ),
-              const SizedBox(
-                height: 64,
-              ),
               Stack(
                 children: [
                   const CircleAvatar(
@@ -49,13 +45,14 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     left: 80,
                     child: IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.add_a_photo_rounded),
+                      icon: const Icon(Icons.add_a_photo_sharp,
+                      color: Colors.grey,)
                     ),
                   )
                 ],
               ),
               const SizedBox(
-                height: 24,
+                height: 60,
               ),
               TextFieldInput(
                 hintText: 'Enter your username',
@@ -71,15 +68,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 textEditingController: _displayNameController,
               ),
               const SizedBox(
-                height: 24,
-              ),
-              TextFieldInput(
-                hintText: 'Enter your bio',
-                textInputType: TextInputType.text,
-                textEditingController: _bioController,
-              ),
-              const SizedBox(
-                height: 24,
+                height: 48,
               ),
               InkWell(
                 child: Container(
@@ -114,8 +103,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   void createProfile() async{
     String res = await AuthService().createUser(
                   username: _usernameController.text,
-                  displayName: _displayNameController.text,
-                  bio: _bioController.text,);
+                  displayName: _displayNameController.text,);
     if (res == 'success') {
       Navigator.pushNamedAndRemoveUntil(context, '/feed', (route) => false);
     }

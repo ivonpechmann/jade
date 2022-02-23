@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jade/services/auth.dart';
 import 'package:jade/shared/top_bar.dart';
 import 'package:jade/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EmailLoginScreen extends StatefulWidget {
   const EmailLoginScreen({Key? key}) : super(key: key);
@@ -87,7 +88,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     );
   }
 
-  Future<void> _signInWithEmailAndPassword() async {
+  Future<dynamic> _signInWithEmailAndPassword() async {
     try {
       User? user = (await AuthService().auth.signInWithEmailAndPassword(
         email: _emailController.text,
@@ -109,7 +110,9 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
         _errorMessage = e.message;
       });
     } catch (e) {
-      _errorMessage = e.toString();
+      setState(() {
+        _errorMessage = e.toString();
+      });
     }
   }
 
