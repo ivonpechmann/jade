@@ -95,8 +95,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
         password: _passwordController.text,
       )).user;
       if (user != null) {
-        if (user.emailVerified) {
-          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        if (user.emailVerified && await AuthService().profileExists()) {
+          Navigator.pushNamedAndRemoveUntil(context, '/feed', (route) => false);
+        } else if (!(await AuthService().profileExists()) && user.emailVerified){
+          Navigator.pushNamedAndRemoveUntil(context, '/profile_setup', (route) => false);
         } else {
           Navigator.pushNamedAndRemoveUntil(context, '/verify_email', (route) => false);
         }

@@ -29,7 +29,17 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 100,
+                height: 15,
+              ),
+              const Text(
+                "Set up profile",
+                style: TextStyle(
+                  fontSize: 30
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 70,
               ),
               Stack(
                 children: [
@@ -37,7 +47,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     radius: 64,
                     backgroundImage:
                         NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
-                    backgroundColor: Colors.red,
                   ),
                   Positioned(
                     bottom: -10,
@@ -52,7 +61,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 ],
               ),
               const SizedBox(
-                height: 60,
+                height: 70,
               ),
               TextFieldInput(
                 hintText: 'Enter your username',
@@ -60,7 +69,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 textEditingController: _usernameController,
               ),
               const SizedBox(
-                height: 24,
+                height: 15,
               ),
               TextFieldInput(
                 hintText: 'Enter your display name',
@@ -68,7 +77,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 textEditingController: _displayNameController,
               ),
               const SizedBox(
-                height: 48,
+                height: 40,
               ),
               InkWell(
                 child: Container(

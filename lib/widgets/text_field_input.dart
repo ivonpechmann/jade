@@ -20,6 +20,8 @@ class TextFieldInput extends StatelessWidget {
     );
 
     return TextField(
+      autocorrect: false,
+      maxLength: 30,
       style: const TextStyle(
         color: Colors.white
       ),
@@ -28,7 +30,7 @@ class TextFieldInput extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(
-          color: Colors.white,
+          color: Colors.grey,
           fontSize: 14,
           fontWeight: FontWeight.w100
         ),

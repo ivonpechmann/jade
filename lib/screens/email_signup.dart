@@ -43,6 +43,8 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                   },
                 ),
                 TextFormField(
+                  autocorrect: false,
+                  maxLength: 30,
                   controller: _passwordController,
                   decoration: const InputDecoration(labelText: 'Password'),
                   validator: (String? value) {

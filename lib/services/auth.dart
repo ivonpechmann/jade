@@ -8,14 +8,14 @@ class AuthService {
   final userStream = FirebaseAuth.instance.authStateChanges();
   final _firestore = FirebaseFirestore.instance;
 
-  // Future<bool> userExists() async {
-  //   DocumentSnapshot documentSnapshot =
-  //       await _firestore.collection('users').doc(user!.uid).get();
-  //   if (documentSnapshot.exists) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  Future<bool> profileExists() async {
+    DocumentSnapshot documentSnapshot =
+        await _firestore.collection('users').doc(user!.uid).get();
+    if (documentSnapshot.exists) {
+      return true;
+    }
+    return false;
+  }
 
   Future<bool> usernameTaken(String username) async {
     QuerySnapshot result = await _firestore.collection('users').where('username'.toLowerCase(), isEqualTo: username.toLowerCase()).get();
@@ -56,7 +56,7 @@ class AuthService {
         await _firestore.collection("users").doc(user!.uid).set(_user.toJson());
         res = "success";
       } else if (await usernameTaken(username)) {
-        res = "Username taken";
+        res = "Username is taken";
       } else {
         res = "Please enter all the fields";
       }
