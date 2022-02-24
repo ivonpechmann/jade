@@ -8,10 +8,19 @@ class AuthService {
   final userStream = FirebaseAuth.instance.authStateChanges();
   final _firestore = FirebaseFirestore.instance;
 
-  Future<bool> userExists() async {
-    DocumentSnapshot documentSnapshot =
-        await _firestore.collection('users').doc(user!.uid).get();
-    if (documentSnapshot.exists) {
+  // Future<bool> userExists() async {
+  //   DocumentSnapshot documentSnapshot =
+  //       await _firestore.collection('users').doc(user!.uid).get();
+  //   if (documentSnapshot.exists) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  Future<bool> usernameTaken(String username) async {
+    QuerySnapshot result = await _firestore.collection('users').where('username'.toLowerCase(), isEqualTo: username.toLowerCase()).get();
+    final List<DocumentSnapshot> documents = result.docs;
+    if (documents.isNotEmpty) {
       return true;
     }
     return false;
@@ -34,7 +43,7 @@ class AuthService {
   }) async {
     String res = "Some error Occurred";
     try {
-      if (username.isNotEmpty && displayName.isNotEmpty) {
+      if (username.isNotEmpty && displayName.isNotEmpty && !(await usernameTaken(username))) {
         model.User _user = model.User(
           username: username,
           displayName: displayName,
@@ -46,6 +55,8 @@ class AuthService {
         );
         await _firestore.collection("users").doc(user!.uid).set(_user.toJson());
         res = "success";
+      } else if (await usernameTaken(username)) {
+        res = "Username taken";
       } else {
         res = "Please enter all the fields";
       }

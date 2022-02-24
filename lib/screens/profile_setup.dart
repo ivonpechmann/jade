@@ -28,26 +28,26 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(
-                child: Container(),
-                flex: 2,
+              const SizedBox(
+                height: 100,
               ),
               Stack(
                 children: [
                   const CircleAvatar(
                     radius: 64,
-                    backgroundImage: NetworkImage(
-                        'https://i.stack.imgur.com/l60Hf.png'),
+                    backgroundImage:
+                        NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
                     backgroundColor: Colors.red,
                   ),
                   Positioned(
                     bottom: -10,
                     left: 80,
                     child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_a_photo_sharp,
-                      color: Colors.grey,)
-                    ),
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.add_a_photo_sharp,
+                          color: Colors.grey,
+                        )),
                   )
                 ],
               ),
@@ -56,7 +56,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               ),
               TextFieldInput(
                 hintText: 'Enter your username',
-                textInputType: TextInputType.text,
+                textInputType: TextInputType.name,
                 textEditingController: _usernameController,
               ),
               const SizedBox(
@@ -64,7 +64,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               ),
               TextFieldInput(
                 hintText: 'Enter your display name',
-                textInputType: TextInputType.text,
+                textInputType: TextInputType.name,
                 textEditingController: _displayNameController,
               ),
               const SizedBox(
@@ -87,7 +87,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               ),
               Container(
                 padding: const EdgeInsets.all(20),
-                child: Text(_errorMessage),
+                child: Text(_errorMessage, style: errorMessage),
               ),
               Flexible(
                 child: Container(),
@@ -100,15 +100,17 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     );
   }
 
-  void createProfile() async{
+  void createProfile() async {
     String res = await AuthService().createUser(
-                  username: _usernameController.text,
-                  displayName: _displayNameController.text,);
+      username: _usernameController.text,
+      displayName: _displayNameController.text,
+    );
     if (res == 'success') {
       Navigator.pushNamedAndRemoveUntil(context, '/feed', (route) => false);
-    }
-    else {
-      _errorMessage = res;
+    } else {
+      setState(() {
+        _errorMessage = res;
+      });
     }
   }
 }

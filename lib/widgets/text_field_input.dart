@@ -20,12 +20,17 @@ class TextFieldInput extends StatelessWidget {
     );
 
     return TextField(
+      style: const TextStyle(
+        color: Colors.white
+      ),
+      cursorColor: Colors.white,
       controller: textEditingController,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(
-          color: Colors.grey,
+          color: Colors.white,
           fontSize: 14,
+          fontWeight: FontWeight.w100
         ),
         border: inputBorder,
         focusedBorder: inputBorder,

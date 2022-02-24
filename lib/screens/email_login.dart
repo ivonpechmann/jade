@@ -77,7 +77,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     _errorMessage!,
-                    style: const TextStyle(color: Colors.red),
+                    style: errorMessage,
                   ),
                 )
               ],
