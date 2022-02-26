@@ -33,7 +33,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               children: <Widget>[
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Username or Email'),
+                  decoration: const InputDecoration(labelText: 'Email'),
                   validator: (String? value) {
                     if (value!.isEmpty) return 'Please enter some text';
                     return null;
