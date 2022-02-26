@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jade/services/auth.dart';
 import 'package:jade/shared/top_bar.dart';
 import 'package:jade/theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EmailLoginScreen extends StatefulWidget {
   const EmailLoginScreen({Key? key}) : super(key: key);

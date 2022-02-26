@@ -3,6 +3,8 @@ import 'package:jade/services/auth.dart';
 import 'package:jade/shared/top_bar.dart';
 import 'package:jade/theme.dart';
 import 'package:jade/widgets/text_field_input.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:typed_data';
 
 class ProfileSetupScreen extends StatefulWidget {
   ProfileSetupScreen({Key? key}) : super(key: key);
@@ -14,7 +16,9 @@ class ProfileSetupScreen extends StatefulWidget {
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _displayNameController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
   String _errorMessage = '';
+  Uint8List? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +47,21 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               ),
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 64,
-                    backgroundImage:
-                        NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://i.stack.imgur.com/l60Hf.png'),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 80,
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: selectImage,
                         icon: const Icon(
                           Icons.add_a_photo_sharp,
                           color: Colors.grey,
@@ -121,5 +130,20 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
         _errorMessage = res;
       });
     }
+  }
+
+  void selectImage() async {
+    XFile? imageFile = await _picker.pickImage(source: ImageSource.gallery);
+    Uint8List im = await imageFile!.readAsBytes();
+    setState(() {
+      _image = im;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameController.dispose();
+    _displayNameController.dispose();
   }
 }
