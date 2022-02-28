@@ -63,7 +63,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   child: SignInButtonBuilder(
                     icon: Icons.email,
                     backgroundColor: purpleColor,
-                    text: 'Sign In',
+                    text: 'Log In',
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _signInWithEmailAndPassword();
