@@ -4,7 +4,7 @@ import 'package:jade/shared/top_bar.dart';
 import 'package:jade/theme.dart';
 import 'package:jade/widgets/text_field_input.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:typed_data';
+import 'dart:io';
 
 class ProfileSetupScreen extends StatefulWidget {
   ProfileSetupScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final TextEditingController _displayNameController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   String _errorMessage = '';
-  Uint8List? _image;
+  File? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 children: [
                   _image != null
                       ? CircleAvatar(
+                          backgroundColor: Colors.black,
                           radius: 64,
-                          backgroundImage: MemoryImage(_image!),
+                          backgroundImage: FileImage(_image!),
                         )
                       : const CircleAvatar(
+                          backgroundColor: Colors.black,
                           radius: 64,
                           backgroundImage: NetworkImage(
                               'https://i.stack.imgur.com/l60Hf.png'),
@@ -134,9 +136,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
   void selectImage() async {
     XFile? imageFile = await _picker.pickImage(source: ImageSource.gallery);
-    Uint8List im = await imageFile!.readAsBytes();
     setState(() {
-      _image = im;
+      _image = File(imageFile!.path);
     });
   }
 
