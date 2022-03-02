@@ -56,9 +56,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                       : const CircleAvatar(
                           backgroundColor: Colors.black,
                           radius: 64,
-                          backgroundImage: NetworkImage(
-                              'https://i.stack.imgur.com/l60Hf.png'),
-                        ),
+                          backgroundImage: AssetImage('images/defaultProfilePic.jpeg'),
+                      ),
                   Positioned(
                     bottom: -10,
                     left: 80,
@@ -66,7 +65,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         onPressed: selectImage,
                         icon: const Icon(
                           Icons.add_a_photo_sharp,
-                          color: Colors.grey,
+                          color: Colors.blueGrey,
                         )),
                   )
                 ],
@@ -124,6 +123,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     String res = await AuthService().createUser(
       username: _usernameController.text,
       displayName: _displayNameController.text,
+      profilePic: _image,
     );
     if (res == 'success') {
       Navigator.pushNamedAndRemoveUntil(context, '/feed', (route) => false);

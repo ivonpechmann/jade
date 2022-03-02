@@ -24,13 +24,13 @@ class Home extends StatelessWidget {
                     return Center(
                       child: Text('${snapshot.error}'),
                     );
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  } else if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
+                  } else {
+                    return const LandingScreen();
                   }
-                  return const LandingScreen();
                 }
               );
             } else if (snapshot.hasError) {

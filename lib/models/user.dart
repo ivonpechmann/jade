@@ -6,6 +6,7 @@ class User {
   final String username;
   final String displayName;
   final String bio;
+  final String profilePicURL;
   final List followers;
   final List following;
 
@@ -15,6 +16,7 @@ class User {
       required this.uid,
       required this.email,
       required this.bio,
+      required this.profilePicURL,
       required this.followers,
       required this.following});
 
@@ -27,6 +29,7 @@ class User {
       uid: snapshot["uid"],
       email: snapshot["email"],
       bio: snapshot["bio"],
+      profilePicURL: snapshot["profilePicURL"],
       followers: snapshot["followers"],
       following: snapshot["following"],
     );
@@ -38,6 +41,7 @@ class User {
         "uid": uid,
         "email": email,
         "bio": bio,
+        "profilePicURL" : profilePicURL,
         "followers": followers,
         "following": following,
   };

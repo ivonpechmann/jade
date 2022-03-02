@@ -1,6 +1,8 @@
 import 'package:jade/models/user.dart' as model;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+import 'package:jade/services/storage.dart';
 
 class AuthService {
   final auth = FirebaseAuth.instance;
@@ -40,9 +42,18 @@ class AuthService {
   Future<String> createUser({
     required String username,
     required String displayName,
+    required File? profilePic,
   }) async {
     String res = "Some error Occurred";
+    String ppURL;
+
     try {
+      if (profilePic == null) {
+        ppURL = "default";
+      } else {
+        ppURL = await StorageService().uploadImageToStorage('profilePics', profilePic);
+      }
+      
       if (username.isNotEmpty && displayName.isNotEmpty && !(await usernameTaken(username))) {
         model.User _user = model.User(
           username: username,
@@ -50,6 +61,7 @@ class AuthService {
           email: user!.email,
           uid: user!.uid,
           bio: '',
+          profilePicURL: ppURL,
           followers: [],
           following: [],
         );
