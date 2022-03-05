@@ -21,7 +21,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   void initState() {
     user = _auth.currentUser;
     user!.sendEmailVerification();
-    timer = Timer.periodic(Duration(seconds: 5), (timer) { 
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) { 
       checkEmailVerified();
     });
     super.initState();
@@ -47,13 +47,25 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               style: Theme.of(context).textTheme.headline4,
             ),
             const SizedBox(
-              height: 25,
+              height: 40,
             ),
             Text(
               'An email has been sent to ${user!.email}.',
               style: Theme.of(context).textTheme.bodyText1,
               textAlign: TextAlign.center,
-            )
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: TextButton(
+                onPressed: user!.sendEmailVerification,
+                child: const Text(
+                  "Send email again.",
+                  style: TextStyle(
+                    color: Colors.blue
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
