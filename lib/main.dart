@@ -28,48 +28,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  var profile;
+
+  @override
+  void initState() {
+    super.initState();
+    profile = AuthService().profileExists();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    profile = AuthService().profileExists();
     return StreamBuilder(
-        stream: AuthService().userStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData && AuthService().user!.emailVerified) {
-              FutureBuilder(
-                future: AuthService().profileExists(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
-                    return const FeedScreen();
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('${snapshot.error}'),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return const LandingScreen();
-                  }
-                }
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
-              );
-            }
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      stream: AuthService().userStream,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return const Center(
+            child: Text("An error occured."),
+          );
+        } else if (snapshot.hasData && AuthService().user!.emailVerified) {
+          return FutureBuilder(
+            future: profile,
+            builder: (context, snapshot) {
+              final profileExists = snapshot.data;
+              if (profileExists == true) {
+                return const FeedScreen();
+              } else {
+                return const LandingScreen();
+              }
+            },
+          );
+        } else {
           return const LandingScreen();
-        });
+        }
+      },
+    );
   }
 }
