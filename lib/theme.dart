@@ -27,5 +27,5 @@ var themeData = ThemeData(
 
 const TextStyle errorMessage = TextStyle(color: Colors.red);
 const grayColor = Color.fromARGB(156, 54, 54, 54);
-const purpleColor = Color.fromRGBO(52, 0, 135, 100);
+const purpleColor = Color.fromARGB(156, 111, 27, 245);
 
